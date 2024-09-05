@@ -1,0 +1,86 @@
+[build-system]
+requires = ['setuptools >= 64.0', 'setuptools_scm >= 8']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'bloom-jewel.discord.py-utils'
+description = 'Utility set for discord.py'
+requires-python = '>=3.8'
+authors = [{ name = 'Rei Hakurei' }]
+readme = 'README.md'
+classifiers = [
+  'License :: OSI Approved :: BSD License',
+  'Intended Audience :: Developers',
+  'Operating System :: OS Independent',
+  'Programming Language :: Python :: 3',
+  'Programming Language :: Python :: 3 :: Only',
+  'Programming Language :: Python :: 3.8',
+  'Programming Language :: Python :: 3.9',
+  'Programming Language :: Python :: 3.10',
+  'Programming Language :: Python :: 3.11',
+  'Programming Language :: Python :: 3.12',
+  'Topic :: Software Defelopment :: Libraries',
+  'Topic :: Software Defelopment :: Libraries :: Python Modules',
+  'Topic :: Utilities',
+]
+dynamic = ['version', 'dependencies']
+
+[project.urls]
+Homepage = 'https://github.com/ReiFan49/discord.py-utils'
+
+[tool.setuptools.dynamic]
+dependencies = { file = 'requirements.txt' }
+
+[tool.setuptools_scm]
+local_scheme = 'dirty-tag'
+
+[project.optional-dependencies]
+lint = [
+  'ruff >= 0.6.0',
+]
+
+[tool.ruff]
+exclude = [
+  '**/__template__.py'
+]
+line-length = 128
+indent-width = 2
+
+[tool.ruff.lint]
+extend-select = [
+  'D', 'D213',
+  'COM812',
+  'LOG',
+  'INP',
+  'PIE',
+  'T20',
+  'RET',
+  'SLOT',
+  'SIM',
+]
+ignore = [
+  'E401',
+  'F403', 'F405',
+  'D100', 'D101', 'D104', 'D107',
+  'D200', 'D203', 'D204', 'D212',
+  'D300',
+  'D401', 'D415',
+  'PIE790',
+  'RET505',
+  'SIM115'
+]
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = 'single'
+
+[tool.ruff.lint.isort]
+section-order = [
+  'future', 'standard-library',
+  'third-party', 'first-party',
+  'local-folder',
+]
+split-on-trailing-comma = true
+
+[tool.ruff.format]
+quote-style = 'single'
+indent-style = 'space'
