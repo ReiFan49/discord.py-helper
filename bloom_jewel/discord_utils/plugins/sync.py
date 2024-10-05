@@ -26,7 +26,7 @@ class Feature(Cog, name='Discord Sync'):
       if ctx.guild is not None:
         serverID = ctx.guild.id
       return
-    log.debug('Syncing Commands on %s', 'Global' if serverID is None else serverID)
+    log.info('Syncing Commands on %s', 'Global' if serverID is None else serverID)
     for c in self.bot.tree.get_commands(guild=serverID):
       log.debug('- %r', repr(c))
       if hasattr(c, 'commands'):
@@ -36,7 +36,7 @@ class Feature(Cog, name='Discord Sync'):
 
   @__sync_commands.error
   async def __sync_commands_error(ctx, error):
-    log.exception('Command syncing error.')
+    log.error('Command syncing error.', exc_info=error)
 
   async def __timed_sync(self):
     await self.bot.wait_until_ready()
