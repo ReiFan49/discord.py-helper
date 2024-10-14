@@ -11,6 +11,7 @@ from discord.ext import commands
 from discord.ext.commands import CommandNotFound
 
 from bloom_jewel.discord_utils import plugins
+from bloom_jewel.discord_utils.errors import EventInterrupt
 from bloom_jewel.discord_utils.modules import config, shared
 
 PrefixType = Union[str, Callable[[commands.Bot, discord.Message], str]]
@@ -170,6 +171,9 @@ class Application():
 
 async def on_command_error(ctx, error):
   ''' Prevents error logging for command not found. '''
+
+  if isinstance(error, EventInterrupt):
+    return
 
   if isinstance(error, CommandNotFound):
     return
