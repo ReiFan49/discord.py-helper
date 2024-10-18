@@ -27,7 +27,7 @@ class Credential:
     self.update(data)
 
   def update(self, data):
-    self.id = data['id']
+    self.id = data.get('id', None)
     self.token = data['token']
 
 __all__ = [

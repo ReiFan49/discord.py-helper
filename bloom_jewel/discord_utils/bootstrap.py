@@ -108,8 +108,9 @@ class Application():
     ''' Synchronize commands for CLI use. '''
 
     async with self.bot:
-      self.bot._connection.application_id = shared.config.cred.id
       await self.bot.http.static_login(self.token)
+      if shared.config.cred.id is not None:
+        self.bot._connection.application_id = shared.config.cred.id
       await self.bot.tree.sync(guild=None)
       for serverID in self.bot.tree._guild_commands.keys():
         await self.bot.tree.sync(guild=serverID)
@@ -124,13 +125,20 @@ class Application():
     ''' Execute application with predefined set of arguments. '''
 
     def mode_normal():
-      log.info(
-        'Invite: %s',
-         oauth_url(
-          shared.config.cred.id,
-          permissions=discord.Permissions(0),
-        ),
-      )
+      async def print_invite_link():
+        log.info(
+          'Invite: %s',
+           oauth_url(
+            self.bot._connection.application_id,
+            permissions=discord.Permissions(0),
+          ),
+        )
+
+      if shared.config.cred.id is not None:
+        self.bot._connection.application_id = shared.config.cred.id
+        asyncio.run(print_invite_link())
+      else:
+        self.bot.add_listener(print_invite_link, 'on_connect')
 
       asyncio.run(self.startup())
 
